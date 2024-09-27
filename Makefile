@@ -14,8 +14,6 @@ install:
 	@echo ">>>>> Migrate and seed"
 	@docker-compose exec app php artisan migrate
 	@docker-compose exec app php artisan db:seed
-	@echo ">>>>> Iniciando Worker"
-	@docker-compose up -d worker
 	@echo "Projeto Iniciando"
 	@echo "Acesse http://localhost:8080"
 
