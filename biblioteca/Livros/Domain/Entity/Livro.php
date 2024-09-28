@@ -9,12 +9,12 @@ class Livro
     public readonly int|null $Codl;
 
     public function __construct(
-        public string $titulo,
-        public string $editora,
-        public int $edicao,
-        public int $anoPublicacao,
-        private AssuntoCollection $assuntos,
-        private AutorCollection $autores
+        public string                      $titulo,
+        public string                      $editora,
+        public int                         $edicao,
+        public int                         $anoPublicacao,
+        private readonly AssuntoCollection $assuntos,
+        private readonly AutorCollection $autores
     ) {
         $this->validate();
     }
