@@ -1,6 +1,6 @@
 <?php
 
-namespace Biblioteca\Livros\Test;
+namespace Biblioteca\Livros\Test\Entity;
 
 use Biblioteca\Livros\Domain\Entity\Assunto;
 use Biblioteca\Livros\Domain\Entity\AssuntoCollection;
@@ -13,15 +13,27 @@ use PHPUnit\Framework\TestCase;
 class LivroEntityTest extends TestCase
 {
     private Livro $livroPadrao;
+    private AssuntoCollection $assuntoCollection;
+    private AutorCollection $autorCollection;
     protected function setUp(): void
     {
+        $assunto = new Assunto('Fantasia', 1);
+        $assuntoCollection = new AssuntoCollection();
+        $assuntoCollection->adicionar($assunto);
+        $this->assuntoCollection = $assuntoCollection;
+
+        $autor = new Autor('J. R. R. Tolkien', 1);
+        $autorCollection = new AutorCollection();
+        $autorCollection->adicionar($autor);
+        $this->autorCollection = $autorCollection;
+
         $this->livroPadrao = new Livro(
             'O Senhor dos Anéis',
             'editora',
             1,
             '2001',
-            new AssuntoCollection(),
-            new AutorCollection()
+            $assuntoCollection,
+            $autorCollection
         );
     }
 
@@ -46,8 +58,8 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             '2001',
-            new AssuntoCollection(),
-            new AutorCollection()
+            $this->assuntoCollection,
+            $this->autorCollection
         );
     }
 
@@ -61,8 +73,8 @@ class LivroEntityTest extends TestCase
             '',
             1,
             '2001',
-            new AssuntoCollection(),
-            new AutorCollection()
+            $this->assuntoCollection,
+            $this->autorCollection
         );
     }
 
@@ -76,8 +88,8 @@ class LivroEntityTest extends TestCase
             'editora',
             0,
             '2001',
-            new AssuntoCollection(),
-            new AutorCollection()
+            $this->assuntoCollection,
+            $this->autorCollection
         );
     }
 
@@ -91,8 +103,8 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             '-2001',
-            new AssuntoCollection(),
-            new AutorCollection()
+            $this->assuntoCollection,
+            $this->autorCollection
         );
     }
 
@@ -106,8 +118,8 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             0,
-            new AssuntoCollection(),
-            new AutorCollection()
+            $this->assuntoCollection,
+            $this->autorCollection
         );
     }
 
@@ -122,11 +134,12 @@ class LivroEntityTest extends TestCase
 
     public function testAdicionarAutorComSucesso()
     {
-        $autor = new Autor('J. R. R. Tolkien', 1);
+        $autor = new Autor('J. R. R. Tolkien', 2);
         $livro = $this->livroPadrao;
         $livro->adicionarAutor($autor);
 
-        $this->assertEquals($autor->CodAu, $livro->getAutores()[$autor->CodAu]->CodAu);
+        $autores = $livro->getAutores();
+        $this->assertEquals($autor->CodAu, $autores->getByCodAu($autor->CodAu)->CodAu);
     }
 
     public function testAdicionarAutorDuplicado()
@@ -134,7 +147,7 @@ class LivroEntityTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Autor já adicionado');
 
-        $autor = new Autor('J. R. R. Tolkien', 1);
+        $autor = new Autor('J. R. R. Tolkien', 2);
         $livro = $this->livroPadrao;
         $livro->adicionarAutor($autor);
         $livro->adicionarAutor($autor);
@@ -142,16 +155,17 @@ class LivroEntityTest extends TestCase
 
     public function testAdicionarMaisDeUmAutorComSucesso()
     {
-        $autor1 = new Autor('J. R. R. Tolkien', 1);
-        $autor2 = new Autor('C. S. Lewis', 2);
+        $autor1 = new Autor('J. R. R. Tolkien', 2);
+        $autor2 = new Autor('C. S. Lewis', 3);
 
         $livro = $this->livroPadrao;
 
         $livro->adicionarAutor($autor1);
         $livro->adicionarAutor($autor2);
 
-        $this->assertEquals($autor1->CodAu, $livro->getAutores()[$autor1->CodAu]->CodAu);
-        $this->assertEquals($autor2->CodAu, $livro->getAutores()[$autor2->CodAu]->CodAu);
+        $autores = $livro->getAutores();
+        $this->assertEquals($autor1->CodAu, $autores->getByCodAu($autor1->CodAu)->CodAu);
+        $this->assertEquals($autor2->CodAu, $autores->getByCodAu($autor2->CodAu)->CodAu);
     }
 
     public function testAdicionarMaisDeUmAutorDuplicado()
@@ -159,8 +173,8 @@ class LivroEntityTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Autor já adicionado');
 
-        $autor1 = new Autor('J. R. R. Tolkien', 1);
-        $autor2 = new Autor('C. S. Lewis', 2);
+        $autor1 = new Autor('J. R. R. Tolkien', 2);
+        $autor2 = new Autor('C. S. Lewis', 3);
 
         $livro = $this->livroPadrao;
 
@@ -171,13 +185,14 @@ class LivroEntityTest extends TestCase
 
     public function testAdicionarAssuntoComSucesso()
     {
-        $assunto = new Assunto('Fantasia', 1);
+        $assunto = new Assunto('Fantasia', 2);
 
         $livro = $this->livroPadrao;
 
         $livro->adicionarAssunto($assunto);
 
-        $this->assertEquals($assunto->codAs, $livro->getAssuntos()[$assunto->codAs]->codAs);
+        $assuntos = $livro->getAssuntos();
+        $this->assertEquals($assunto->codAs, $assuntos->getByCodAs($assunto->codAs)->codAs);
     }
 
     public function testAdicionarAssuntoDuplicado()
@@ -185,7 +200,7 @@ class LivroEntityTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Assunto já adicionado');
 
-        $assunto = new Assunto('Fantasia', 1);
+        $assunto = new Assunto('Fantasia', 2);
 
         $livro = $this->livroPadrao;
 
@@ -195,16 +210,17 @@ class LivroEntityTest extends TestCase
 
     public function testAdicionarMaisDeUmAssuntoComSucesso()
     {
-        $assunto1 = new Assunto('Fantasia', 1);
-        $assunto2 = new Assunto('Aventura', 2);
+        $assunto1 = new Assunto('Fantasia', 2);
+        $assunto2 = new Assunto('Aventura', 3);
 
         $livro = $this->livroPadrao;
 
         $livro->adicionarAssunto($assunto1);
         $livro->adicionarAssunto($assunto2);
 
-        $this->assertEquals($assunto1->codAs, $livro->getAssuntos()[$assunto1->codAs]->codAs);
-        $this->assertEquals($assunto2->codAs, $livro->getAssuntos()[$assunto2->codAs]->codAs);
+        $assuntos = $livro->getAssuntos();
+        $this->assertEquals($assunto1->codAs, $assuntos->getByCodAs($assunto1->codAs)->codAs);
+        $this->assertEquals($assunto2->codAs, $assuntos->getByCodAs($assunto2->codAs)->codAs);
 
     }
 
@@ -213,8 +229,8 @@ class LivroEntityTest extends TestCase
         $this->expectException(DomainException::class);
         $this->expectExceptionMessage('Assunto já adicionado');
 
-        $assunto1 = new Assunto('Fantasia', 1);
-        $assunto2 = new Assunto('Aventura', 2);
+        $assunto1 = new Assunto('Fantasia', 2);
+        $assunto2 = new Assunto('Aventura', 3);
 
         $livro = $this->livroPadrao;
 

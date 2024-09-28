@@ -41,6 +41,14 @@ class Livro
         if ($this->anoPublicacao <= 0) {
             throw new DomainException('Ano de publicação do livro deve ser maior que zero');
         }
+
+        if ($this->assuntos->count() === 0) {
+            throw new DomainException('Livro deve ter pelo menos um assunto');
+        }
+
+        if ($this->autores->count() === 0) {
+            throw new DomainException('Livro deve ter pelo menos um autor');
+        }
     }
 
     public function adicionarAutor(Autor $autor): void
@@ -48,9 +56,9 @@ class Livro
         $this->autores->adicionar($autor);
     }
 
-    public function getAutores(): array
+    public function getAutores(): AutorCollection
     {
-        return $this->autores->getAll();
+        return $this->autores;
     }
 
     public function adicionarAssunto(Assunto $assunto): void
@@ -58,8 +66,8 @@ class Livro
         $this->assuntos->adicionar($assunto);
     }
 
-    public function getAssuntos(): array
+    public function getAssuntos(): AssuntoCollection
     {
-        return $this->assuntos->getAll();
+        return $this->assuntos;
     }
 }

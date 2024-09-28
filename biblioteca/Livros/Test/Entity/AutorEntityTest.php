@@ -1,6 +1,6 @@
 <?php
 
-namespace Biblioteca\Livros\Test;
+namespace Biblioteca\Livros\Test\Entity;
 
 use Biblioteca\Livros\Domain\Entity\Autor;
 use DomainException;
