@@ -1,9 +1,7 @@
 <?php
 
-namespace Biblioteca\Livros\Test\Persistence;
+namespace Biblioteca\Livros\Test\Livros\Domain\Persistence;
 
-use DomainException;
-use PHPUnit\Framework\TestCase;
 use Biblioteca\Livros\Domain\Entity\Assunto;
 use Biblioteca\Livros\Domain\Entity\AssuntoCollection;
 use Biblioteca\Livros\Domain\Entity\Autor;
@@ -11,6 +9,8 @@ use Biblioteca\Livros\Domain\Entity\AutorCollection;
 use Biblioteca\Livros\Domain\Entity\Livro;
 use Biblioteca\Livros\Domain\Persistence\Dao\LivroDao;
 use Biblioteca\Livros\Domain\Persistence\Repository\LivroRepository;
+use DomainException;
+use PHPUnit\Framework\TestCase;
 
 class LivroRepositoryTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Biblioteca\Livros\Test\Entity;
+namespace Biblioteca\Livros\Test\Livros\Domain\Entity;
 
 use Biblioteca\Livros\Domain\Entity\Assunto;
 use Biblioteca\Livros\Domain\Entity\AssuntoCollection;

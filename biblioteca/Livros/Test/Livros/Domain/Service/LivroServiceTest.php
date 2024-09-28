@@ -1,6 +1,6 @@
 <?php
 
-namespace Biblioteca\Livros\Test\Service;
+namespace Biblioteca\Livros\Test\Livros\Domain\Service;
 
 use Biblioteca\Livros\Domain\Dto\AssuntoCollectionDto;
 use Biblioteca\Livros\Domain\Dto\AssuntoDto;
