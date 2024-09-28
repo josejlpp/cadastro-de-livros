@@ -12,12 +12,12 @@ class AssuntoCollection implements Countable
     public function adicionar(Assunto $assunto): void
     {
         $this->validate($assunto);
-        $this->assuntos[$assunto->codAs] = $assunto;
+        $this->assuntos[$assunto->CodAs] = $assunto;
     }
 
     private function validate(Assunto $assunto): void
     {
-        if (isset($this->assuntos[$assunto->codAs])) {
+        if (isset($this->assuntos[$assunto->CodAs])) {
             throw new DomainException('Assunto já adicionado');
         }
     }

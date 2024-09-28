@@ -3,7 +3,9 @@
 namespace Biblioteca\Livros\Domain\Service;
 
 use Biblioteca\Livros\Domain\Dto\AssuntoCollectionDto;
+use Biblioteca\Livros\Domain\Dto\AssuntoDto;
 use Biblioteca\Livros\Domain\Dto\AutorCollectionDto;
+use Biblioteca\Livros\Domain\Dto\AutorDto;
 use Biblioteca\Livros\Domain\Dto\LivroDto;
 use Biblioteca\Livros\Domain\Entity\Assunto;
 use Biblioteca\Livros\Domain\Entity\AssuntoCollection;
@@ -51,10 +53,20 @@ class LivroService
         $assuntos = new AssuntoCollection();
         foreach ($assuntosDto->assuntos as $assuntoDto) {
             $assuntos->adicionar(
-                new Assunto($assuntoDto->descricao, $assuntoDto->codAs)
+                new Assunto($assuntoDto->descricao, $assuntoDto->CodAs)
             );
         }
 
         return $assuntos;
+    }
+
+    public function buildAutorEntityFromDto(AutorDto $autorDto): Autor
+    {
+        return new Autor($autorDto->nome, $autorDto->CodAu);
+    }
+
+    public function buildAssuntoEntityFromDto(AssuntoDto $assuntoDto): Assunto
+    {
+        return new Assunto($assuntoDto->descricao, $assuntoDto->CodAs);
     }
 }

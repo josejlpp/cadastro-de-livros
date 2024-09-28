@@ -45,6 +45,6 @@ class AssuntoEntityTest extends TestCase
         $assunto = new Assunto('Ficção Científica');
         $assunto->adicionarCodAs(1);
 
-        $this->assertEquals(1, $assunto->codAs);
+        $this->assertEquals(1, $assunto->CodAs);
     }
 }

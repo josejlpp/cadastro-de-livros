@@ -9,15 +9,15 @@ class Assunto
 
     public function __construct(
         public string $descricao,
-        public int|null $codAs = null
+        public int|null $CodAs = null
     )
     {
         $this->validate();
     }
 
-    public function adicionarCodAs(int $codAs): void
+    public function adicionarCodAs(int $CodAs): void
     {
-        $this->codAs = $codAs;
+        $this->CodAs = $CodAs;
     }
 
     private function validate(): void

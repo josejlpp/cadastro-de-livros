@@ -192,7 +192,7 @@ class LivroEntityTest extends TestCase
         $livro->adicionarAssunto($assunto);
 
         $assuntos = $livro->getAssuntos();
-        $this->assertEquals($assunto->codAs, $assuntos->getByCodAs($assunto->codAs)->codAs);
+        $this->assertEquals($assunto->CodAs, $assuntos->getByCodAs($assunto->CodAs)->CodAs);
     }
 
     public function testAdicionarAssuntoDuplicado()
@@ -219,8 +219,8 @@ class LivroEntityTest extends TestCase
         $livro->adicionarAssunto($assunto2);
 
         $assuntos = $livro->getAssuntos();
-        $this->assertEquals($assunto1->codAs, $assuntos->getByCodAs($assunto1->codAs)->codAs);
-        $this->assertEquals($assunto2->codAs, $assuntos->getByCodAs($assunto2->codAs)->codAs);
+        $this->assertEquals($assunto1->CodAs, $assuntos->getByCodAs($assunto1->CodAs)->CodAs);
+        $this->assertEquals($assunto2->CodAs, $assuntos->getByCodAs($assunto2->CodAs)->CodAs);
 
     }
 
