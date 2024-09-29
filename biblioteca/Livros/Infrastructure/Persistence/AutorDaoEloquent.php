@@ -12,14 +12,14 @@ class AutorDaoEloquent implements AutorDao
     public function adicionar(Autor $autor): void
     {
         AutorModel::create([
-            'nome' => $autor->nome
+            'Nome' => $autor->nome
         ]);
     }
 
     public function atualizar(int $id, Autor $autor): void
     {
         $autorModel = AutorModel::find($id);
-        $autorModel->nome = $autor->nome;
+        $autorModel->Nome = $autor->nome;
         $autorModel->save();
     }
 

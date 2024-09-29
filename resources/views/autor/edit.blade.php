@@ -10,7 +10,7 @@
         @csrf
         @method('PUT')
         <div class="row">
-            <x-adminlte-input name="nome" value="{{ old('nome', $autor->nome) }}" label="Nome" placeholder="Nome do autor"
+            <x-adminlte-input name="nome" value="{{ old('nome', $autor->Nome) }}" label="Nome" placeholder="Nome do autor"
                               fgroup-class="col-md-12"/>
         </div>
 
