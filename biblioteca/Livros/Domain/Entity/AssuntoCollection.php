@@ -17,6 +17,10 @@ class AssuntoCollection implements Countable
 
     private function validate(Assunto $assunto): void
     {
+        if (!$assunto->CodAs) {
+            throw new DomainException('Código do assunto não pode ser nulo');
+        }
+
         if (isset($this->assuntos[$assunto->CodAs])) {
             throw new DomainException('Assunto já adicionado');
         }

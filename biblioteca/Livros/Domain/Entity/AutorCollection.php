@@ -17,6 +17,10 @@ class AutorCollection implements Countable
 
     private function validate(Autor $autor)
     {
+        if (!$autor->CodAu) {
+            throw new DomainException('Código do autor não pode ser nulo');
+        }
+
         if (isset($this->autores[$autor->CodAu])) {
             throw new DomainException('Autor já adicionado');
         }

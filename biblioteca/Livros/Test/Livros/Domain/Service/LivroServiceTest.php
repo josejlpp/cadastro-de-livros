@@ -11,6 +11,7 @@ use Biblioteca\Livros\Domain\Entity\Assunto;
 use Biblioteca\Livros\Domain\Entity\Autor;
 use Biblioteca\Livros\Domain\Entity\Livro;
 use Biblioteca\Livros\Domain\Service\LivroService;
+use DomainException;
 use PHPUnit\Framework\TestCase;
 
 class LivroServiceTest extends TestCase
@@ -73,6 +74,52 @@ class LivroServiceTest extends TestCase
         $this->assertEquals(2021, $livro->anoPublicacao);
         $this->assertCount(1, $livro->getAssuntos());
         $this->assertCount(2, $livro->getAutores());
+    }
+
+    public function testCriarEntidadeLivroAPartirDoDtoComAutorSemId()
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Código do autor não pode ser nulo');
+
+        $livroDto = new LivroDto(
+            Codl: null,
+            titulo: 'Livro de Teste',
+            editora: 'Editora Teste',
+            edicao: 1,
+            anoPublicacao: 2021,
+            assuntosDto: new AssuntoCollectionDto(
+                new AssuntoDto(CodAs: 1, descricao: 'Assunto 1')
+            ),
+            autoresDto: new AutorCollectionDto(
+                new AutorDto(CodAu: null, nome: 'Autor 1')
+            )
+        );
+
+        $service = new LivroService();
+        $service->buildLivroEntityFromDto($livroDto);
+    }
+
+    public function testCriarEntidadeLivroAPartirDoDtoComAssuntoSemId()
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Código do assunto não pode ser nulo');
+
+        $livroDto = new LivroDto(
+            Codl: null,
+            titulo: 'Livro de Teste',
+            editora: 'Editora Teste',
+            edicao: 1,
+            anoPublicacao: 2021,
+            assuntosDto: new AssuntoCollectionDto(
+                new AssuntoDto(CodAs: null, descricao: 'Assunto 1')
+            ),
+            autoresDto: new AutorCollectionDto(
+                new AutorDto(CodAu: 1, nome: 'Autor 1')
+            )
+        );
+
+        $service = new LivroService();
+        $service->buildLivroEntityFromDto($livroDto);
     }
 
     public function testCriarEntidadeAutorAPartirDoDtoParaCriacaoDeDados()
