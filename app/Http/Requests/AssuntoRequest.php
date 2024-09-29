@@ -11,7 +11,7 @@ class AssuntoRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class AssuntoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'descricao' => 'required|string|max:20|min:3',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'descricao.required' => 'O campo descrição é obrigatório',
+            'descricao.string' => 'O campo descrição deve ser uma string',
+            'descricao.max' => 'O campo descrição deve ter no máximo 20 caracteres',
+            'descricao.min' => 'O campo descrição deve ter no mínimo 3 caracteres',
         ];
     }
 }

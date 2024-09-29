@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AssuntoRequest;
 use App\Models\Assunto;
+use Biblioteca\Livros\Application\UseCase\CriarAssunto;
 use Illuminate\Http\Request;
 
 class AssuntoController extends Controller
@@ -14,16 +15,10 @@ class AssuntoController extends Controller
         return view('assunto.index', compact('assuntos'));
     }
 
-    public function show($id)
-    {
-        $assunto = Assunto::find($id);
-        return view('assunto.show', compact('assunto'));
-    }
-
     public function store(AssuntoRequest $request)
     {
         $validated = $request->validated();
-        dd($validated);
+        app()->make(CriarAssunto::class)->handle($validated);
     }
 
     public function update(AssuntoRequest $request, $id)

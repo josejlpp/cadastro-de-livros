@@ -52,6 +52,9 @@ class LivroController extends Controller
     public function edit($id)
     {
         $livro = Livro::find($id);
-        return view('livro.edit', compact('livro'));
+        $autores = Autor::all();
+        $assuntos = Assunto::all();
+
+        return view('livro.edit', compact('livro', 'autores', 'assuntos'));
     }
 }
