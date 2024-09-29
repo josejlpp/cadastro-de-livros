@@ -36,6 +36,7 @@ class LivroRepositoryTest extends TestCase
             'editora',
             1,
             '2001',
+            10,
             $assuntoCollection,
             $autorCollection
         );

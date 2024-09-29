@@ -15,7 +15,8 @@ class LivroDaoEloquent implements LivroDao
             'titulo' => $livro->titulo,
             'editora' => $livro->editora,
             'edicao' => $livro->edicao,
-            'ano' => $livro->anoPublicacao
+            'ano' => $livro->anoPublicacao,
+            'valor' => $livro->valor,
         ]);
 
         $livroModel->autores()->attach($livro->getAutores()->map(fn($autor) => $autor->CodAu));
@@ -29,6 +30,7 @@ class LivroDaoEloquent implements LivroDao
         $livroModel->editora = $livro->editora;
         $livroModel->edicao = $livro->edicao;
         $livroModel->ano = $livro->anoPublicacao;
+        $livroModel->valor = $livro->valor;
         $livroModel->autores()->sync($livro->getAutores()->map(fn($autor) => $autor->CodAu));
         $livroModel->assuntos()->sync($livro->getAssuntos()->map(fn($assunto) => $assunto->CodAs));
         $livroModel->save();

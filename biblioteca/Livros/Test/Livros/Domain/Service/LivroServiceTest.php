@@ -24,6 +24,7 @@ class LivroServiceTest extends TestCase
             editora: 'Editora Teste',
             edicao: 1,
             anoPublicacao: 2021,
+            valor: 10,
             assuntosDto: new AssuntoCollectionDto(
                 new AssuntoDto(CodAs: 1, descricao: 'Assunto 1')
             ),
@@ -42,6 +43,7 @@ class LivroServiceTest extends TestCase
         $this->assertEquals('Editora Teste', $livro->editora);
         $this->assertEquals(1, $livro->edicao);
         $this->assertEquals(2021, $livro->anoPublicacao);
+        $this->assertEquals(10, $livro->valor);
         $this->assertCount(1, $livro->getAssuntos());
         $this->assertCount(2, $livro->getAutores());
     }
@@ -54,6 +56,7 @@ class LivroServiceTest extends TestCase
             editora: 'Editora Teste',
             edicao: 1,
             anoPublicacao: 2021,
+            valor: 10,
             assuntosDto: new AssuntoCollectionDto(
                 new AssuntoDto(CodAs: 1, descricao: 'Assunto 1')
             ),
@@ -72,6 +75,7 @@ class LivroServiceTest extends TestCase
         $this->assertEquals('Editora Teste', $livro->editora);
         $this->assertEquals(1, $livro->edicao);
         $this->assertEquals(2021, $livro->anoPublicacao);
+        $this->assertEquals(10, $livro->valor);
         $this->assertCount(1, $livro->getAssuntos());
         $this->assertCount(2, $livro->getAutores());
     }
@@ -87,6 +91,7 @@ class LivroServiceTest extends TestCase
             editora: 'Editora Teste',
             edicao: 1,
             anoPublicacao: 2021,
+            valor: 10,
             assuntosDto: new AssuntoCollectionDto(
                 new AssuntoDto(CodAs: 1, descricao: 'Assunto 1')
             ),
@@ -110,6 +115,7 @@ class LivroServiceTest extends TestCase
             editora: 'Editora Teste',
             edicao: 1,
             anoPublicacao: 2021,
+            valor: 10,
             assuntosDto: new AssuntoCollectionDto(
                 new AssuntoDto(CodAs: null, descricao: 'Assunto 1')
             ),

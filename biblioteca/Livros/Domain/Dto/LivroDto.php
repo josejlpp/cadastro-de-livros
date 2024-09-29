@@ -10,6 +10,7 @@ class LivroDto
         public string $editora,
         public int $edicao,
         public int $anoPublicacao,
+        public float $valor,
         public AssuntoCollectionDto $assuntosDto,
         public AutorCollectionDto $autoresDto
     )

@@ -32,6 +32,7 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             '2001',
+            10,
             $assuntoCollection,
             $autorCollection
         );
@@ -58,6 +59,7 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             '2001',
+            10,
             $this->assuntoCollection,
             $this->autorCollection
         );
@@ -73,6 +75,7 @@ class LivroEntityTest extends TestCase
             '',
             1,
             '2001',
+            10,
             $this->assuntoCollection,
             $this->autorCollection
         );
@@ -88,6 +91,7 @@ class LivroEntityTest extends TestCase
             'editora',
             0,
             '2001',
+            10,
             $this->assuntoCollection,
             $this->autorCollection
         );
@@ -103,6 +107,7 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             '-2001',
+            10,
             $this->assuntoCollection,
             $this->autorCollection
         );
@@ -118,9 +123,41 @@ class LivroEntityTest extends TestCase
             'editora',
             1,
             0,
+            10,
             $this->assuntoCollection,
             $this->autorCollection
         );
+    }
+
+    public function testCriarEntidadeLivroComValorZero()
+    {
+        $this->expectException(DomainException::class);
+        $this->expectExceptionMessage('Valor do livro deve ser maior que zero');
+
+        new Livro(
+            'O Senhor dos Anéis',
+            'editora',
+            1,
+            1,
+            0,
+            $this->assuntoCollection,
+            $this->autorCollection
+        );
+    }
+
+    public function testCriarEntidadeLivroComValorQuebrado()
+    {
+        $livro = new Livro(
+            'O Senhor dos Anéis',
+            'editora',
+            1,
+            1,
+            11.99,
+            $this->assuntoCollection,
+            $this->autorCollection
+        );
+
+        $this->assertEquals(11.99, $livro->valor);
     }
 
     public function testRestararLivroSalvo()

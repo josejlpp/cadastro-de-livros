@@ -13,6 +13,7 @@ class Livro
         public string                      $editora,
         public int                         $edicao,
         public int                         $anoPublicacao,
+        public float                        $valor,
         private readonly AssuntoCollection $assuntos,
         private readonly AutorCollection $autores
     ) {
@@ -36,6 +37,10 @@ class Livro
 
         if ($this->edicao <= 0) {
             throw new DomainException('Edição do livro deve ser maior que zero');
+        }
+
+        if ($this->valor <= 0) {
+            throw new DomainException('Valor do livro deve ser maior que zero');
         }
 
         if ($this->anoPublicacao <= 0) {

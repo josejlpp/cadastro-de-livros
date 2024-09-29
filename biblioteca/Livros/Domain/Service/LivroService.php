@@ -25,6 +25,7 @@ class LivroService
             editora: $dto->editora,
             edicao: $dto->edicao,
             anoPublicacao: $dto->anoPublicacao,
+            valor: $dto->valor,
             assuntos: $assuntos,
             autores: $autores
         );

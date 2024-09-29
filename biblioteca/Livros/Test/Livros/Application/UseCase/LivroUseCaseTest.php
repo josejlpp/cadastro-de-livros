@@ -48,6 +48,7 @@ class LivroUseCaseTest extends TestCase
             'editora',
             1,
             2024,
+            10,
             $assuntoCollectionDto,
             $autorCollectionDto
 
@@ -90,6 +91,7 @@ class LivroUseCaseTest extends TestCase
             editora: $this->livroDto->editora,
             edicao: $this->livroDto->edicao,
             anoPublicacao: $this->livroDto->anoPublicacao,
+            valor: $this->livroDto->valor,
             assuntos: $this->assuntoCollection,
             autores: $this->autorCollection
         );
@@ -114,6 +116,7 @@ class LivroUseCaseTest extends TestCase
             editora: $this->livroDto->editora,
             edicao: $this->livroDto->edicao,
             anoPublicacao: $this->livroDto->anoPublicacao,
+            valor: $this->livroDto->valor,
             assuntos: $this->assuntoCollection,
             autores: $this->autorCollection
         );
