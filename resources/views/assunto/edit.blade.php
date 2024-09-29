@@ -8,8 +8,9 @@
 
     <form action="{{ route('assunto.update', $assunto->CodAs) }}" method="POST">
         @csrf
+        @method('PUT')
         <div class="row">
-            <x-adminlte-input name="descricao" value="{{ old('descricao', $assunto->descricao) }}" label="Descrição" placeholder="Descrição do assunto"
+            <x-adminlte-input name="descricao" value="{{ old('descricao', $assunto->Descricao) }}" label="Descrição" placeholder="Descrição do assunto"
                               fgroup-class="col-md-12"/>
         </div>
 

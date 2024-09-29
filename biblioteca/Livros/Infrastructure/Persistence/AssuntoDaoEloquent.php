@@ -12,14 +12,14 @@ class AssuntoDaoEloquent implements AssuntoDao
     public function adicionar(Assunto $assunto): void
     {
         AssuntoModel::create([
-            'descricao' => $assunto->descricao
+            'Descricao' => $assunto->descricao
         ]);
     }
 
     public function atualizar(int $id, Assunto $assunto): void
     {
         $assuntoModel = AssuntoModel::find($id);
-        $assuntoModel->descricao = $assunto->descricao;
+        $assuntoModel->Descricao = $assunto->descricao;
         $assuntoModel->save();
     }
 

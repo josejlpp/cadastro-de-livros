@@ -2,15 +2,15 @@
 
 namespace App\Helper;
 
-use Biblioteca\Livros\Domain\Dto\AssuntoCollectionDto;
+use Biblioteca\Livros\Domain\Dto\AssuntoDto;
 
 class LivroHelper
 {
-    public static function makeAssuntoDtoFromRequest(array $request): AssuntoCollectionDto
+    public static function makeAssuntoDtoFromRequest(array $request, int|null $id = null): AssuntoDto
     {
-        return new AssuntoCollectionDto(
-            $request['nome'],
-            $request['descricao']
+        return new AssuntoDto(
+            CodAs: $id,
+            descricao: $request['descricao']
         );
     }
 }
