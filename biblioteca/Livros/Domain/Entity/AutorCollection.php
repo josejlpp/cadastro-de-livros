@@ -2,10 +2,11 @@
 
 namespace Biblioteca\Livros\Domain\Entity;
 
+use Iterator;
 use Countable;
 use DomainException;
 
-class AutorCollection implements Countable
+class AutorCollection implements Countable, Iterator
 {
     private array $autores = [];
 
@@ -37,5 +38,30 @@ class AutorCollection implements Countable
             throw new DomainException('Autor não encontrado');
         }
         return $this->autores[$CodAu];
+    }
+
+    public function current(): mixed
+    {
+        return $this->autores[key($this->autores)];
+    }
+
+    public function next(): void
+    {
+        next($this->autores);
+    }
+
+    public function key(): int
+    {
+        return key($this->autores);
+    }
+
+    public function valid(): bool
+    {
+        return key($this->autores) !== null;
+    }
+
+    public function rewind(): void
+    {
+        reset($this->autores);
     }
 }

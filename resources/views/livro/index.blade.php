@@ -16,12 +16,13 @@
         'Editora',
         'Edicao',
         'Ano de Publicacao',
+        'Valor',
         ['label' => 'Ações', 'no-export' => true, 'width' => 5],
     ];
 
     $config = [
         'order' => [[0, 'asc']],
-        'columns' => [null, null, null, null,  null, ['orderable' => false]],
+        'columns' => [null, null, null, null,  null, null, ['orderable' => false]],
     ];
     @endphp
 
@@ -33,6 +34,7 @@
                 <td>{{ $livro->Editora }}</td>
                 <td>{{ $livro->Edicao }}</td>
                 <td>{{ $livro->AnoPublicacao }}</td>
+                <td>R$ {{ $livro->Valor }}</td>
                 <td>
                     <button class="btn btn-xs btn-primary" title="Editar" onclick="window.location='{{ route('livro.edit', $livro->Codl) }}'">
                         <i class="fas fa-lg fa-edit"></i>

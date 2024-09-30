@@ -27,4 +27,9 @@ class Livro extends Model
     {
         return $this->belongsToMany(Assunto::class, 'Livro_Assunto', 'Livro_Codl', 'Assunto_CodAs');
     }
+
+    public function getValorAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }
 }

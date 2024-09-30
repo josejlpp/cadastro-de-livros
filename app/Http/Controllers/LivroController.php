@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Helper\LivroHelper;
 use App\Http\Requests\LivroRequest;
 use App\Models\Assunto;
 use App\Models\Autor;
 use App\Models\Livro;
+use Biblioteca\Livros\Application\UseCase\AtualizarLivro;
+use Biblioteca\Livros\Application\UseCase\CriarLivro;
+use DomainException;
+use Exception;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class LivroController extends Controller
 {
@@ -25,13 +33,62 @@ class LivroController extends Controller
     public function store(LivroRequest $request)
     {
         $validated = $request->validated();
-        dd($validated);
+
+        DB::beginTransaction();
+        try {
+            $livroDto = LivroHelper::buildLivroDtoFromRequest($validated);
+            app()->make(CriarLivro::class)->handle($livroDto);
+            DB::commit();
+        } catch (DomainException $de) {
+            DB::rollBack();
+            Log::error($de->getMessage(), $de->getTrace());
+            return redirect()->route('livro.create')
+                ->with('error', $de->getMessage())
+                ->withInput();
+        }
+        catch (QueryException $qe) {
+            DB::rollBack();
+            Log::error($qe->getMessage(), $qe->getTrace());
+            return redirect()->route('livro.create')
+                ->with('error', 'Erro inesperado no banco de dadods ao criar livro')
+                ->withInput();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+            return redirect()->route('livro.create')->with('error', 'Erro inesperado ao criar livro');
+        }
+
+        return redirect()->route('livro.index')->with('success', 'Livro criado com sucesso');
     }
 
     public function update(LivroRequest $request, $id)
     {
         $validated = $request->validated();
-        dd($validated);
+        DB::beginTransaction();
+        try {
+            $livroDto = LivroHelper::buildLivroDtoFromRequest($validated, $id);
+            app()->make(AtualizarLivro::class)->handle($livroDto);
+            DB::commit();
+        } catch (DomainException $de) {
+            DB::rollBack();
+            Log::error($de->getMessage(), $de->getTrace());
+            return redirect()->route('livro.edit', $id)
+                ->with('error', $de->getMessage())
+                ->withInput();
+        }
+        catch (QueryException $qe) {
+            DB::rollBack();
+            Log::error($qe->getMessage(), $qe->getTrace());
+            return redirect()->route('livro.edit', $id)
+                ->with('error', 'Erro inesperado no banco de dadods ao criar livro')
+                ->withInput();
+        } catch (Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage(), $e->getTrace());
+            return redirect()->route('livro.edit', $id)->with('error', 'Erro inesperado ao criar livro');
+        }
+
+        return redirect()->route('livro.index')->with('success', 'Livro atualizado com sucesso');
     }
 
     public function destroy($id)
@@ -51,7 +108,7 @@ class LivroController extends Controller
 
     public function edit($id)
     {
-        $livro = Livro::find($id);
+        $livro = Livro::with('assuntos', 'autores')->find($id);
         $autores = Autor::all();
         $assuntos = Assunto::all();
 

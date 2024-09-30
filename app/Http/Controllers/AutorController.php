@@ -89,6 +89,7 @@ class AutorController extends Controller
             app()->make(AtualizarAutor::class)->handle($autorDto);
         }
         catch (DomainException $de) {
+            DB::rollBack();
             Log::error($de->getMessage(), $de->getTrace());
             return redirect()->route('autor.edit', $id)
                 ->with('error', $de->getMessage())
@@ -101,6 +102,7 @@ class AutorController extends Controller
                 ->with('error', 'Erro inesperado no banco de dadods ao criar autor')
                 ->withInput();
         } catch (Exception $e) {
+            DB::rollBack();
             Log::error($e->getMessage(), $e->getTrace());
             return redirect()->route('autor.edit', $id)->with('error', 'Erro inesperado ao atualizar autor');
         }

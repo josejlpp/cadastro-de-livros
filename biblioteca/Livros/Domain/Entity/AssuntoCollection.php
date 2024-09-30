@@ -4,8 +4,9 @@ namespace Biblioteca\Livros\Domain\Entity;
 
 use Countable;
 use DomainException;
+use Iterator;
 
-class AssuntoCollection implements Countable
+class AssuntoCollection implements Countable, Iterator
 {
     private array $assuntos = [];
 
@@ -37,5 +38,30 @@ class AssuntoCollection implements Countable
             throw new DomainException('Assunto não encontrado');
         }
         return $this->assuntos[$CodAs];
+    }
+
+    public function current(): mixed
+    {
+        return $this->assuntos[key($this->assuntos)];
+    }
+
+    public function next(): void
+    {
+        next($this->assuntos);
+    }
+
+    public function key(): int
+    {
+        return key($this->assuntos);
+    }
+
+    public function valid(): bool
+    {
+        return key($this->assuntos) !== null;
+    }
+
+    public function rewind(): void
+    {
+        reset($this->assuntos);
     }
 }

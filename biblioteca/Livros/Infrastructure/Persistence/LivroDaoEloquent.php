@@ -2,6 +2,8 @@
 
 namespace Biblioteca\Livros\Infrastructure\Persistence;
 
+use Biblioteca\Livros\Domain\Entity\AssuntoCollection;
+use Biblioteca\Livros\Domain\Entity\AutorCollection;
 use Biblioteca\Livros\Domain\Entity\Livro;
 use Biblioteca\Livros\Domain\Persistence\Dao\LivroDao;
 use App\Models\Livro as LivroModel;
@@ -12,28 +14,49 @@ class LivroDaoEloquent implements LivroDao
     public function adicionar(Livro $livro): void
     {
         $livroModel = LivroModel::create([
-            'titulo' => $livro->titulo,
-            'editora' => $livro->editora,
-            'edicao' => $livro->edicao,
-            'ano' => $livro->anoPublicacao,
-            'valor' => $livro->valor,
+            'Titulo' => $livro->titulo,
+            'Editora' => $livro->editora,
+            'Edicao' => $livro->edicao,
+            'AnoPublicacao' => $livro->anoPublicacao,
+            'Valor' => $livro->valor,
         ]);
 
-        $livroModel->autores()->attach($livro->getAutores()->map(fn($autor) => $autor->CodAu));
-        $livroModel->assuntos()->attach($livro->getAssuntos()->map(fn($assunto) => $assunto->CodAs));
+        $this->syncAutores($livroModel, $livro->getAutores());
+        $this->syncAssuntos($livroModel, $livro->getAssuntos());
     }
 
     public function atualizar(int $id, Livro $livro): void
     {
         $livroModel = LivroModel::find($id);
-        $livroModel->titulo = $livro->titulo;
-        $livroModel->editora = $livro->editora;
-        $livroModel->edicao = $livro->edicao;
-        $livroModel->ano = $livro->anoPublicacao;
-        $livroModel->valor = $livro->valor;
-        $livroModel->autores()->sync($livro->getAutores()->map(fn($autor) => $autor->CodAu));
-        $livroModel->assuntos()->sync($livro->getAssuntos()->map(fn($assunto) => $assunto->CodAs));
+        $livroModel->Titulo = $livro->titulo;
+        $livroModel->Editora = $livro->editora;
+        $livroModel->Edicao = $livro->edicao;
+        $livroModel->AnoPublicacao = $livro->anoPublicacao;
+        $livroModel->Valor = $livro->valor;
         $livroModel->save();
+
+        $this->syncAutores($livroModel, $livro->getAutores());
+        $this->syncAssuntos($livroModel, $livro->getAssuntos());
+    }
+
+    private function syncAutores(LivroModel &$livroModel, AutorCollection $autores)
+    {
+        $autoresIds = [];
+        foreach ($autores as $autor) {
+            $autoresIds[] = $autor->CodAu;
+        }
+
+        $livroModel->autores()->sync($autoresIds);
+    }
+
+    private function syncAssuntos(LivroModel &$livroModel, AssuntoCollection $assuntos)
+    {
+        $assuntosIds = [];
+        foreach ($assuntos as $assunto) {
+            $assuntosIds[] = $assunto->CodAs;
+        }
+
+        $livroModel->assuntos()->sync($assuntosIds);
     }
 
     public function excluir(int $id): void

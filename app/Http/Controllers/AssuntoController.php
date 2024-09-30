@@ -63,6 +63,7 @@ class AssuntoController extends Controller
             app()->make(AtualizarAssunto::class)->handle($assuntoDto);
         }
         catch (DomainException $de) {
+            DB::rollBack();
             Log::error($de->getMessage(), $de->getTrace());
             return redirect()->route('assunto.edit', $id)
                 ->with('error', $de->getMessage())
@@ -75,6 +76,7 @@ class AssuntoController extends Controller
                 ->with('error', 'Erro inesperado no banco de dadods ao criar assunto')
                 ->withInput();
         } catch (Exception $e) {
+            DB::rollBack();
             Log::error($e->getMessage(), $e->getTrace());
             return redirect()->route('assunto.edit', $id)->with('error', 'Erro inesperado ao atualizar assunto');
         }
