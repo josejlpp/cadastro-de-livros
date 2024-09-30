@@ -326,7 +326,13 @@ return [
             'text' => 'Novo',
             'route' => 'livro.create',
             'icon' => 'fas fa-fw fa-book',
-        ]
+        ],
+        ['header' => 'Outros'],
+        [
+            'text' => 'Relatórios',
+            'route' => 'report.index',
+            'icon' => 'fas fa-fw fa-file',
+        ],
     ],
 
     /*

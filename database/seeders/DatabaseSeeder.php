@@ -16,24 +16,59 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Livro::factory(10)
-            ->has(Assunto::factory()->count(2), 'assuntos')
-            ->has(Autor::factory()->count(2), 'autores')
-            ->create();
+        $assuntos = Assunto::factory()->count(10)->create();
+        $autores = Autor::factory()->count(5)->create();
 
-        Livro::factory(15)
-            ->has(Assunto::factory()->count(2), 'assuntos')
-            ->has(Autor::factory()->count(1), 'autores')
-            ->create();
+        // 2 autores e 2 assuntos
+        $livros = Livro::factory(5)->create();
 
-        Livro::factory(5)
-            ->has(Assunto::factory()->count(1), 'assuntos')
-            ->has(Autor::factory()->count(4), 'autores')
-            ->create();
+        $livros->each(function ($livro) use ($autores) {
+            $livro->autores()->attach(
+                $autores->random(2)->pluck('CodAu')->toArray()
+            );
+        });
 
-        Livro::factory(5)
-            ->has(Assunto::factory()->count(1), 'assuntos')
-            ->has(Autor::factory()->count(1), 'autores')
-            ->create();
+        $livros->each(function ($livro) use ($assuntos) {
+            $livro->assuntos()->attach(
+                $assuntos->random(2)->pluck('CodAs')->toArray()
+            );
+        });
+
+        // 1 autores e 2 assunto
+        $livros = Livro::factory(15)->create();
+
+        $livros->each(function ($livro) use ($autores) {
+            $livro->autores()->attach(
+                $autores->random(1)->pluck('CodAu')->toArray()
+            );
+        });
+
+        $livros->each(function ($livro) use ($assuntos) {
+            $livro->assuntos()->attach(
+                $assuntos->random(2)->pluck('CodAs')->toArray()
+            );
+        });
+
+
+        $livros->each(function ($livro) use ($assuntos) {
+            $livro->assuntos()->attach(
+                $assuntos->random(1)->pluck('CodAs')->toArray()
+            );
+        });
+
+        // 1 autor e 1 assunto
+        $livros = Livro::factory(20)->create();
+
+        $livros->each(function ($livro) use ($autores) {
+            $livro->autores()->attach(
+                $autores->random(1)->pluck('CodAu')->toArray()
+            );
+        });
+
+        $livros->each(function ($livro) use ($assuntos) {
+            $livro->assuntos()->attach(
+                $assuntos->random(1)->pluck('CodAs')->toArray()
+            );
+        });
     }
 }

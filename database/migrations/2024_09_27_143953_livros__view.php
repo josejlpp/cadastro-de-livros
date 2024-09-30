@@ -15,7 +15,7 @@ return new class extends Migration
         DB::statement("
             CREATE VIEW Livros_View AS
             select l.Titulo,
-                   group_concat(au.Nome order by au.Nome separator ', ') as Autores,
+                   group_concat(distinct(au.Nome) order by au.Nome separator ', ') as Autores,
                    group_concat(a.Descricao order by a.Descricao separator ', ') as Assuntos,
                    l.Edicao, l.AnoPublicacao, l.Editora, l.Valor from Livro as l
             inner join Livro_Assunto la on l.Codl = la.Livro_Codl

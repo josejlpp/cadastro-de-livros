@@ -11,16 +11,18 @@ install:
 	@docker-compose exec app composer install
 	@echo ">>>>> Generate key"
 	@docker-compose exec app php artisan key:generate
-	@echo ">>>>> Migrate and seed"
+	@echo ">>>>> Rodando Migrate e seed"
 	@docker-compose exec app php artisan migrate
 	@docker-compose exec app php artisan db:seed
+	@echo ">>>>> Iniciando Worker"
+	@docker-compose up -d worker
 	@echo "Projeto Iniciando"
 	@echo "Acesse http://localhost:8080"
 
 test:
-	@echo ">>>>> Running tests"
+	@echo ">>>>> Rodando tests"
 	@docker-compose exec app php artisan test
 
 down:
-	@echo ">>>>> Stoping Docker"
+	@echo ">>>>> Parando Docker"
 	@docker-compose down

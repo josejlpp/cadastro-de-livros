@@ -26,3 +26,8 @@ Route::put('/assunto/{id}', 'App\Http\Controllers\AssuntoController@update')->na
 Route::delete('/assunto/{id}', 'App\Http\Controllers\AssuntoController@destroy')->name('assunto.destroy');
 Route::get('/assunto/create', 'App\Http\Controllers\AssuntoController@create')->name('assunto.create');
 Route::get('/assunto/{id}/edit', 'App\Http\Controllers\AssuntoController@edit')->name('assunto.edit');
+
+Route::get('/report', 'App\Http\Controllers\ReportController@index')->name('report.index');
+Route::get('/report/create', 'App\Http\Controllers\ReportController@create')->name('report.create');
+Route::get('/report/download/{fileName}', 'App\Http\Controllers\ReportController@download')->name('report.download');
+Route::delete('/report/delete/{report}', 'App\Http\Controllers\ReportController@delete')->name('report.delete');

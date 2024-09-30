@@ -24,7 +24,7 @@ class LivroHelper
     {
         return new AutorDto(
             CodAu: $id,
-            nome: $request['Nome']
+            nome: $request['nome']
         );
     }
 

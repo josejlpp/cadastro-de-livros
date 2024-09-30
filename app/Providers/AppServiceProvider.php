@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Listeners\ReportRequestListener;
 use Biblioteca\Livros\Domain\Persistence\Dao\AssuntoDao;
 use Biblioteca\Livros\Domain\Persistence\Dao\AutorDao;
 use Biblioteca\Livros\Domain\Persistence\Dao\LivroDao;
@@ -11,16 +12,27 @@ use Biblioteca\Livros\Domain\Persistence\Repository\LivroRepository;
 use Biblioteca\Livros\Infrastructure\Persistence\AssuntoDaoEloquent;
 use Biblioteca\Livros\Infrastructure\Persistence\AutorDaoEloquent;
 use Biblioteca\Livros\Infrastructure\Persistence\LivroDaoEloquent;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
+
+    public $bindings = [
+        LivroDao::class => LivroDaoEloquent::class,
+        AutorDao::class => AutorDaoEloquent::class,
+        AssuntoDao::class => AssuntoDaoEloquent::class,
+        LivroRepository::class => LivroRepository::class,
+        AutorRepository::class => AutorRepository::class,
+        AssuntoRepository::class => AssuntoRepository::class,
+    ];
+
     /**
      * Register any application services.
      */
     public function register(): void
     {
-        //
+        Event::subscribe(ReportRequestListener::class);
     }
 
     /**
@@ -28,34 +40,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->bind(
-            LivroDao::class,
-            LivroDaoEloquent::class
-        );
 
-        $this->app->bind(
-            AutorDao::class,
-            AutorDaoEloquent::class
-        );
-
-        $this->app->bind(
-            AssuntoDao::class,
-            AssuntoDaoEloquent::class
-        );
-
-        $this->app->bind(
-            AssuntoRepository::class,
-            AssuntoRepository::class
-        );
-
-        $this->app->bind(
-            AutorRepository::class,
-            AutorRepository::class
-        );
-
-        $this->app->bind(
-            LivroRepository::class,
-            LivroRepository::class
-        );
     }
 }

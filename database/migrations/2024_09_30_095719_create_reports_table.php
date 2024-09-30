@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Livro', function (Blueprint $table) {
-            $table->id('Codl');
-            $table->string('Titulo', 40);
-            $table->double('Valor', 8, 2);
-            $table->string('Editora', 40);
-            $table->integer('Edicao');
-            $table->string('AnoPublicacao', 4);
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->enum('status', ['generating', 'completed', 'failed']);
+            $table->string('file_name');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Livro');
+        Schema::dropIfExists('reports');
     }
 };
