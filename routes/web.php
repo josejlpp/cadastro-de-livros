@@ -31,3 +31,11 @@ Route::get('/report', 'App\Http\Controllers\ReportController@index')->name('repo
 Route::get('/report/create', 'App\Http\Controllers\ReportController@create')->name('report.create');
 Route::get('/report/download/{fileName}', 'App\Http\Controllers\ReportController@download')->name('report.download');
 Route::delete('/report/delete/{report}', 'App\Http\Controllers\ReportController@delete')->name('report.delete');
+
+Route::get('/simulador', 'App\Http\Controllers\SimuladorController@index')->name('simulador.index');
+Route::post('/simulador', 'App\Http\Controllers\SimuladorController@store')->middleware('throttle:10,1')->name('simulador.store');
+Route::get('/simulador/resultado/{uuid}', 'App\Http\Controllers\SimuladorController@resultado')->whereUuid('uuid')->name('simulador.resultado');
+
+Route::get('/simulacao', 'App\Http\Controllers\SimulacaoController@index')->name('simulacao.index');
+Route::get('/simulacao/{id}', 'App\Http\Controllers\SimulacaoController@show')->whereNumber('id')->name('simulacao.show');
+Route::delete('/simulacao/{id}', 'App\Http\Controllers\SimulacaoController@destroy')->whereNumber('id')->name('simulacao.destroy');

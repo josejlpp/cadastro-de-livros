@@ -327,6 +327,18 @@ return [
             'route' => 'livro.create',
             'icon' => 'fas fa-fw fa-book',
         ],
+        ['header' => 'SIMULADOR TRIBUTÁRIO'],
+        [
+            'text' => 'Simulações',
+            'route' => 'simulacao.index',
+            'icon' => 'fas fa-fw fa-calculator',
+        ],
+        [
+            'text' => 'Abrir simulador',
+            'route' => 'simulador.index',
+            'icon' => 'fas fa-fw fa-external-link-alt',
+            'target' => '_blank',
+        ],
         ['header' => 'Outros'],
         [
             'text' => 'Relatórios',
